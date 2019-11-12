@@ -64,7 +64,6 @@ def find_all_users():
     return users
 
 
-
 def delete_user(delete_name):
     connection = sqlite3.connect('camp.db')
     cursor = connection.cursor()
@@ -74,11 +73,19 @@ def delete_user(delete_name):
     connection.close()
 
 
+# def update_user(update_name, update_weight):
+#     connection = sqlite3.connect('camp.db')
+#     cursor = connection.cursor()
+#     sql = f"UPDATE users SET weight ='{update_weight}' WHERE name = '{update_name}'" # named style
+#     cursor.execute(sql)
+#     connection.commit()
+#     connection.close()
+
 def update_user(update_name, update_weight):
     connection = sqlite3.connect('camp.db')
     cursor = connection.cursor()
-    sql = f"UPDATE users SET weight ='{update_weight}' WHERE name = '{update_name}'"
-    cursor.execute(sql)
+    sql = f"UPDATE users SET weight = ? WHERE name = ?"  # qmark style
+    cursor.execute(sql, (update_weight, update_name))  # executeのplaceholderを使った書き方
     connection.commit()
     connection.close()
 
